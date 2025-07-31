@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+Here i practice a lot of things means you can learn every widget that is used in front-end.
+
+Plus i Have build a to-do List app.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
