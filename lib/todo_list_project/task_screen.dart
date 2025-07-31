@@ -80,7 +80,7 @@ class _TaskScreenState extends State<TaskScreen> {
                           child: Icon(Icons.check_box_outline_blank),
                         ),
                         SizedBox(width: 10,),
-                        Text(_itemList[index], style: TextStyle(fontSize: 20)),
+                        Text(_itemList[index], style: TextStyle(fontFamily: "Outfit Variable",fontWeight: FontWeight.bold,fontSize: 20)),
                         Spacer(),
                         GestureDetector(
                           onTap : () {

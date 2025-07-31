@@ -71,10 +71,10 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     SizedBox(width: 20),
                     Text(
-                      "Dashboard",
+                      "Notes App",
                       style: TextStyle(fontSize: 18, fontFamily: "Outfit Bold"),
                     ),
-                    SizedBox(width: 80),
+                    SizedBox(width: 100),
                     Icon(Icons.notifications_none_rounded),
                     SizedBox(width: 20),
                     Icon(Icons.search),

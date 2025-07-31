@@ -19,7 +19,7 @@ class _tasksContainerState extends State<tasksContainer> {
           color: Colors.green.shade50,
           borderRadius: BorderRadius.all(Radius.circular(10))
       ),
-      child: Text(widget.tasks, style: TextStyle(fontSize: 18),),
+      child: Text(widget.tasks, style: TextStyle(fontFamily: "Outfit Variable",fontWeight: FontWeight.bold,fontSize: 18),),
     );
   }
 }
