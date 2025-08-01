@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../helper/database_helper.dart';
 import '../models/task_model.dart';
 
@@ -21,45 +24,49 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
       appBar: AppBar(
         backgroundColor: Colors.purple.shade100,
         title: Container(
-        height: 60,
-        decoration: BoxDecoration(
-            color: Colors.purple.shade50
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                child: Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle),
-                  child: Image(
-                    image: AssetImage(
-                      "assets/images/DashboardProfile.png",
-                    ),
+          padding: EdgeInsets.all(5),
+          height: 60,
+          decoration: BoxDecoration(
+            color: Colors.purple.shade50,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage(
+                    "assets/images/DashboardProfile.png",
                   ),
                 ),
-              ),
-              SizedBox(width: 20),
-              Text(
-                "Notes App",
-                style: TextStyle(fontSize: 18, fontFamily: "Outfit Bold"),
-              ),
-              SizedBox(width: 100),
-              Icon(Icons.notifications_none_rounded),
-              SizedBox(width: 20),
-              Icon(Icons.search),
-              // Icon(),
-              // Icon(),
-            ],
+                SizedBox(width: 20),
+                Text(
+                  "Notes App",
+                  style: TextStyle(fontSize: 18, fontFamily: "Outfit Bold"),
+                ),
+                SizedBox(width: 100),
+                GestureDetector(
+                  onTap: () {
+                    showNotifications();
+                  },
+                  child: Icon(Icons.notifications_none_rounded),
+                ),
+                SizedBox(width: 20),
+                Icon(Icons.search),
+                // Icon(),
+                // Icon(),
+              ],
+            ),
           ),
         ),
-      ),
         toolbarHeight: 80,
       ),
       body: Container(
         color: Colors.purple.shade50,
         padding: EdgeInsets.all(15),
-          child: _taskList()),
+        child: _taskList(),
+      ),
     );
   }
 
@@ -121,38 +128,91 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
           itemBuilder: (context, index) {
             Task task = snapshot.data![index];
             return ListTile(
-              onLongPress: (){
-                showDialog(context: context, builder: (context) {
-                  return AlertDialog(
-                    title: Text("Delete Task ?"),
-                    actions: [
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                          child: Text("Cancel")
+              onLongPress: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text(
+                        "Delete Task ?",
+                        style: TextStyle(
+                          fontFamily: "Outfit Bold",
+                          fontSize: 18,
+                        ),
                       ),
-                      GestureDetector(
-                        onTap: (){
-                          _databaseService.deleteTask(task.id);
-                          Navigator.pop(context);
-                          setState(() {});
-                        },
-                          child: Text("Delete"),
-                      ),
-                    ],
-                  );
-                },
+                      actions: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                              fontFamily: "Outfit Variable",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            _databaseService.deleteTask(task.id);
+                            Navigator.pop(context);
+                            setState(() {});
+                          },
+                          child: Text(
+                            "Delete",
+                            style: TextStyle(
+                              fontFamily: "Outfit Variable",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
-              title: Text(task.content, style: TextStyle(fontFamily: "Outfit Variable",fontWeight: FontWeight.bold,fontSize: 18),),
-              trailing: Checkbox(value: task.status == 1, onChanged: (value){
-                setState(() {
-                  _databaseService.updateTaskStatus(task.id, value! ? 1 : 0);
-                });
-              }),
+              title: Text(
+                task.content,
+                style: TextStyle(
+                  fontFamily: "Outfit Variable",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              trailing: Checkbox(
+                value: task.status == 1,
+                onChanged: (value) {
+                  setState(() {
+                    _databaseService.updateTaskStatus(task.id, value! ? 1 : 0);
+                  });
+                },
+              ),
             );
-        },);
+          },
+        );
+      },
+    );
+  }
+
+  void showNotifications() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            height: 400,
+            child: Center(
+              child: Text(
+                "No Notifications",
+                style: TextStyle(fontSize: 18, fontFamily: "Outfit Bold"),
+              ),
+            ),
+          ),
+        );
       },
     );
   }

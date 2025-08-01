@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: AppBarTheme(color: Colors.blue.shade200),
       ),
       debugShowCheckedModeBanner: false,
-      home: DatabaseScreen(),
+      home: FirebaseScreen(),
     );
   }
 }
